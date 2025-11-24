@@ -5,17 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  image: string;
-  rating: number;
-}
+import { products, categories, Product } from '@/data/products';
 
 interface CartItem extends Product {
   quantity: number;
@@ -23,9 +13,6 @@ interface CartItem extends Product {
 
 const Catalog = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
-  const products: Product[] = [
     {
       id: 1,
       name: 'Маска для осознанных снов REM Master',
@@ -267,22 +254,31 @@ const Catalog = () => {
       </div>
 
       <div className="container py-8">
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
-          {categories.map(category => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(category.id)}
-              className="gap-2"
-            >
-              <Icon name={category.icon as any} size={16} />
-              {category.name}
-            </Button>
-          ))}
+        <div className="text-center mb-12">
+          <h3 className="text-3xl font-bold mb-6">Категории товаров</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {categories.map((category) => (
+              <Link key={category.id} to={`/${category.id}`}>
+                <Card className="hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer h-full">
+                  <CardHeader className="text-center">
+                    <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Icon name={category.icon as any} size={32} className="text-primary" />
+                    </div>
+                    <CardTitle className="text-xl">{category.name}</CardTitle>
+                    <CardDescription className="text-sm">{category.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="text-center mb-8">
+          <h3 className="text-3xl font-bold">Все товары</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
-          {filteredProducts.map((product, index) => (
+          {products.map((product, index) => (
             <Card 
               key={product.id} 
               className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 animate-scale-in"
