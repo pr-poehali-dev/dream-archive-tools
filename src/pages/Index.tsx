@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -152,9 +153,19 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="Moon" className="text-primary" size={28} />
-            <h1 className="text-2xl font-bold text-foreground">Архив Снов</h1>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Icon name="Moon" className="text-primary" size={28} />
+              <h1 className="text-2xl font-bold text-foreground">Архив Снов</h1>
+            </div>
+            <nav className="hidden md:flex items-center gap-4">
+              <Link to="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Главная
+              </Link>
+              <Link to="/catalog" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Каталог
+              </Link>
+            </nav>
           </div>
           <Sheet>
             <SheetTrigger asChild>
@@ -225,10 +236,12 @@ const Index = () => {
             <p className="text-xl text-muted-foreground">
               Инструменты и практики для контроля над своими снами
             </p>
-            <Button size="lg" className="mt-4">
-              Начать путешествие
-              <Icon name="Sparkles" className="ml-2" size={16} />
-            </Button>
+            <Link to="/catalog">
+              <Button size="lg" className="mt-4">
+                Начать путешествие
+                <Icon name="Sparkles" className="ml-2" size={16} />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -236,8 +249,14 @@ const Index = () => {
       <section id="catalog" className="py-16 bg-muted/30">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Каталог товаров</h2>
+            <h2 className="text-4xl font-bold mb-4">Популярные товары</h2>
             <p className="text-muted-foreground">Профессиональные инструменты для изучения снов</p>
+            <Link to="/catalog">
+              <Button variant="outline" className="mt-4">
+                Смотреть весь каталог
+                <Icon name="ArrowRight" className="ml-2" size={16} />
+              </Button>
+            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map(product => (
